@@ -1,7 +1,11 @@
 from MachineLearningMethons import clustering
 from MachineLearningMethons import regression
 from MachineLearningMethons import classification
+from MachineLearningMethons import artificialNeuralNetwork
 def main():
+    annObject = artificialNeuralNetwork.aNN()
+    annObject.callFunction()
+
     clusteringObject = clustering.cluster()
     clusteringObject.callFunction()
 
@@ -10,9 +14,6 @@ def main():
 
     classificationObject = classification.classification()
     classificationObject.callFunction()
-
-
-
 
 
 

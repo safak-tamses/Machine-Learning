@@ -1,6 +1,12 @@
 import numpy as np
 import pandas as pd
-
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, accuracy_score
+from sklearn.svm import SVR
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LogisticRegression
 class regression:
 
     # Data preparation
@@ -21,16 +27,13 @@ class regression:
 
     def __linearR(self):
         X, y = self.__featureScale()
-        from sklearn.linear_model import LinearRegression
         regressor = LinearRegression()
         regressor.fit(X, y)
         r_squared = regressor.score(X, y)
         print(f"LinearRegression: {r_squared}")
-        from sklearn.model_selection import train_test_split
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1)
         y_predicted = regressor.predict(X_test)
         y_predicted = np.round(y_predicted)
-        from sklearn.metrics import confusion_matrix, accuracy_score
         conMatrix = confusion_matrix(y_test, y_predicted)
         print(f"Linear Regression : {conMatrix}")
         trueValue = conMatrix[:1, :1] + conMatrix[-1, -1]
@@ -51,11 +54,9 @@ class regression:
         lin_reg_2.fit(X_poly, y)
         r_squared = regressor.score(X, y)
         print(f"PolynomialRegression: {r_squared}")
-        from sklearn.model_selection import train_test_split
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1)
         y_predicted = regressor.predict(X_test)
         y_predicted = np.round(y_predicted)
-        from sklearn.metrics import confusion_matrix, accuracy_score
         conMatrix = confusion_matrix(y_test, y_predicted)
         print(f"Polynominal Regression : {conMatrix}")
         trueValue = conMatrix[:1, :1] + conMatrix[-1, -1]
@@ -66,16 +67,13 @@ class regression:
 
     def __SVRr(self):
         X, y = self.__featureScale()
-        from sklearn.svm import SVR
         regressor = SVR(kernel='rbf')
         regressor.fit(X, y)
         r_squared = regressor.score(X, y)
         print(f"SupportVectorMachine: {r_squared}")
-        from sklearn.model_selection import train_test_split
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1)
         y_predicted = regressor.predict(X_test)
         y_predicted = np.round(y_predicted)
-        from sklearn.metrics import confusion_matrix, accuracy_score
         conMatrix = confusion_matrix(y_test, y_predicted)
         print(f"Support Vector Machine Regression : {conMatrix}")
         trueValue = conMatrix[:1, :1] + conMatrix[-1, -1]
@@ -86,16 +84,13 @@ class regression:
 
     def __decisionTreeR(self):
         X, y = self.__featureScale()
-        from sklearn.tree import DecisionTreeRegressor
         regressor = DecisionTreeRegressor(random_state=1)
         regressor.fit(X, y)
         r_squared = regressor.score(X, y)
         print(f"DecisionTreeRegressor: {r_squared}")
-        from sklearn.model_selection import train_test_split
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1)
         y_predicted = regressor.predict(X_test)
         y_predicted = np.round(y_predicted)
-        from sklearn.metrics import confusion_matrix, accuracy_score
         conMatrix = confusion_matrix(y_test, y_predicted)
         print(f"Decision Tree Regressor : {conMatrix}")
         trueValue = conMatrix[:1, :1] + conMatrix[-1, -1]
@@ -106,16 +101,13 @@ class regression:
 
     def __randomForestTreeR(self):
         X, y = self.__featureScale()
-        from sklearn.ensemble import RandomForestRegressor
         regressor = RandomForestRegressor(n_estimators=10, random_state=1)
         regressor.fit(X, y)
         r_squared = regressor.score(X, y)
         print(f"RandomForestRegressor: {r_squared}")
-        from sklearn.model_selection import train_test_split
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1)
         y_predicted = regressor.predict(X_test)
         y_predicted = np.round(y_predicted)
-        from sklearn.metrics import confusion_matrix, accuracy_score
         conMatrix = confusion_matrix(y_test, y_predicted)
         print(f"Random Forest Regressor : {conMatrix}")
         trueValue = conMatrix[:1, :1] + conMatrix[-1, -1]
@@ -126,16 +118,13 @@ class regression:
 
     def __logisticR(self):
         X, y = self.__featureScale()
-        from sklearn.linear_model import LogisticRegression
         classifier = LogisticRegression(random_state=0)
         classifier.fit(X, y)
         r_squared = classifier.score(X,y)
         print((f"LogisticRegression: {r_squared}"))
-        from sklearn.model_selection import train_test_split
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1)
         y_predicted = classifier.predict(X_test)
         y_predicted = np.round(y_predicted)
-        from sklearn.metrics import confusion_matrix, accuracy_score
         conMatrix = confusion_matrix(y_test, y_predicted)
         print(f"Logistic Regression Classification: {conMatrix}")
         trueValue = conMatrix[:1, :1] + conMatrix[-1, -1]

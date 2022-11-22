@@ -1,11 +1,12 @@
 from kneed import KneeLocator
 import pandas as pd
 from matplotlib import pyplot as plt
-
-
+from sklearn.preprocessing import StandardScaler
+import scipy.cluster.hierarchy as sch
+from sklearn.cluster import AgglomerativeClustering
+from sklearn.cluster import KMeans
 class cluster:
     def __dataPre(self):
-
         dataset = pd.read_csv('./modelFiles/50_Startups.csv')
         X = dataset.iloc[:, 0:3].values
         y = dataset.iloc[:, -1].values
@@ -14,7 +15,6 @@ class cluster:
     def __featureScale(self):
         X, y = self.__dataPre()
         # Future Scaling
-        from sklearn.preprocessing import StandardScaler
         sc = StandardScaler()
         X = sc.fit_transform(X)
         return X, y
@@ -22,7 +22,6 @@ class cluster:
     # to find the number of clusters
     def __elbowMethod(self):
         X, y = self.__featureScale()
-        from sklearn.cluster import KMeans
         wcss = []
         for i in range(1, 30):
             kmeans = KMeans(n_clusters=i, init='k-means++', random_state=1)
@@ -40,7 +39,6 @@ class cluster:
     # to find the number of clusters
     def __dendrogram(self):
         X, y = self.__featureScale()
-        import scipy.cluster.hierarchy as sch
         dendrogram = sch.dendrogram(sch.linkage(X, method='ward'))
 
         plt.title('Dendrogram')
@@ -51,7 +49,6 @@ class cluster:
     def __kMeansClustering(self):
         X, y = self.__featureScale()
         numberOfClusters = self.__elbowMethod()
-        from sklearn.cluster import KMeans
         kmeans = KMeans(n_clusters=numberOfClusters, init='k-means++', random_state=2)
         kmeans.fit(X)
         y_kmeans = kmeans.fit_predict(X)
@@ -81,7 +78,6 @@ class cluster:
     def __hierarchicalClustering(self):
         X, y = self.__featureScale()
         numberOfClusters = self.__elbowMethod()
-        from sklearn.cluster import AgglomerativeClustering
         hc = AgglomerativeClustering(n_clusters=5, affinity='euclidean', linkage='ward')
         y_hc = hc.fit_predict(X)
         plt.scatter(X[y_hc == 0, 0], X[y_hc == 0, 1], s=100, c='red', label='Cluster 1')
@@ -98,6 +94,3 @@ class cluster:
     def callFunction(self):
         self.__hierarchicalClustering()
         self.__kMeansClustering()
-
-c=cluster()
-c.callFunction()
